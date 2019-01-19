@@ -26,7 +26,7 @@ module.exports = {
     close: function (force) {
         return new Promise((resolve, reject) => cordova.exec(resolve, reject, 'SumUp', 'close', []));
     },
-    pay: function (amount, currencycode, title) {
-        return new Promise((resolve, reject) => cordova.exec(resolve, reject, 'SumUp', 'pay', [amount, currencycode, title]));
+    pay: function (amount, currencycode, title, email, phone) {
+        return new Promise((resolve, reject) => cordova.exec(resolve, reject, 'SumUp', 'pay', [amount, currencycode, title, email, phone]));
     },
 }
