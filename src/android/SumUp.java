@@ -175,12 +175,64 @@ public class SumUp extends CordovaPlugin {
 
         return false;
       }
+      
+            String email;
+      try {
+        email = args.get(3).toString();
+        // Log.d("SumUp.java"," email= "+args.get(3).toString());
+      } catch (Exception e) {
+        JSONObject obj = new JSONObject();
+        obj.put("code", 0);
+        obj.put("message", "Can't parse email");
+        callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR, obj));
+
+        return false;
+      }
+
+      String phone;
+      try {
+        phone = args.get(4).toString();
+        // Log.d("SumUp.java"," phone= "+args.get(4).toString());
+      } catch (Exception e) {
+        JSONObject obj = new JSONObject();
+        obj.put("code", 0);
+        obj.put("message", "Can't parse phone");
+        callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR, obj));
+
+        return false;
+      }
+
+      /*
+        SumUpPayment payment = SumUpPayment.builder()
+                // mandatory parameters
+                .total(new BigDecimal("1.12")) // minimum 1.00
+                .currency(SumUpPayment.Currency.EUR)
+          // optional: include a tip amount in addition to the total
+          .tip(new BigDecimal("0.10"))
+                // optional: add details
+                .title("Taxi Ride")
+                .receiptEmail("customer@mail.com")
+                .receiptSMS("+3531234567890")
+                // optional: Add metadata
+                .addAdditionalInfo("AccountId", "taxi0334")
+                .addAdditionalInfo("From", "Paris")
+                .addAdditionalInfo("To", "Berlin")
+                // optional: foreign transaction ID, must be unique!
+                .foreignTransactionId(UUID.randomUUID().toString())  // can not exceed 128 chars
+          // optional: skip the success screen
+          .skipSuccessScreen()
+                .build();
+
+        SumUpAPI.checkout(MainActivity.this, payment, 2);
+      */
 
       SumUpPayment payment = SumUpPayment.builder()
         .total(amount)
         .currency(currency)
         .title(title)
-        .skipSuccessScreen()
+        .receiptEmail(email)
+        .receiptSMS(phone)
+        //.skipSuccessScreen() // parece que esto impide que se envie el recibo por email y sms          
         .build();
 
       Runnable runnable = () -> {
