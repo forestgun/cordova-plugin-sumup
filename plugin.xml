@@ -14,6 +14,10 @@
     <keywords>
       sumup, cordova, phonegap, cordova:ecosystem, phonegap:ecosystem
     </keywords>
+           
+    <js-module name="SumUp" src="www/sumup.js">
+        <clobbers target="SumUp" />
+    </js-module>
     
     <!-- android -->
     <platform name="android">
